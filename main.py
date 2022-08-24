@@ -1,60 +1,10 @@
-import os
-from aiohttp import client 
-import discord
-from pyairtable import Table
-from dotenv import load_dotenv
-import json
+from crypt import methods
+import flask
 
-load_dotenv()
-'''
-class MyClient(discord.Client):
-    async def on_ready(self):
-        print(f'Logged on as {self.user}!')
+app = flask.Flask(__name__)
+app.config["DEBUG"] = True
 
-    async def on_message(message):
-        if message.author == client.user:
-            return
-        if message.content.startswith('$hello'):
-            await message.channel.send('Hello!')        
-intents = discord.Intents.default()
-intents.message_content = True
-server_id = os.getenv("SERVER_ID")
-client = MyClient(intents=intents)
-client.run(os.getenv("DISCORD_TOKEN"))
+@app.route('/', methods= ['GET'])
+def home():
+    return "<h1> WELCOME, YOU CAN SEND INFORMATION BY FILLING OUT THIS FORM</h1><p>This site is a prototyp API for interacting with channel on discord by using bots</p>"
 
-'''
-# Airtable integration
-
-def get_users_list_with_sentences():
-    users = []
-    sentence = []
-    table = Table(os.getenv("AIRTABLE_API_KEY"), os.getenv("AIRTABLE_BASE_ID"), os.getenv('AIRTABLE_TABLE_NAME'))
-    data = table.all()
-    for row in data:
-        users.append(row.get('fields','do not find fields').get("User",'do not find user'))
-        sentence.append(row.get('fields','do not find fields').get("Sentences", 'do not find user'))
-    return dict(zip(users,sentence))
-
-users_sentence_list = get_users_list_with_sentences()
-print(users_sentence_list)
-
-
-'''
-intents = discord.Intents.default()
-intents.message_content = True
-
-client = discord.Client(intents=intents)
-
-@client.event
-async def on_ready():
-    print(f"Bot has logged in as {client.user}")
-
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-    if message.content.startswith("$hello"):
-        await message.channel.send("Hello")
-
-client.run(os.getenv("DISCORD_TOKEN"))
-'''
