@@ -2,10 +2,10 @@ import os
 from aiohttp import client 
 import discord
 from pyairtable import Table
-from dotenv import load_dotenv
+#  from dotenv import load_dotenv
 import json
 
-load_dotenv()
+#  load_dotenv()
 '''
 class MyClient(discord.Client):
     async def on_ready(self):
@@ -31,18 +31,27 @@ def get_users_list_with_sentences():
     table = Table(os.getenv("AIRTABLE_API_KEY"), os.getenv("AIRTABLE_BASE_ID"), os.getenv('AIRTABLE_TABLE_NAME'))
     data = table.all()
     for row in data:
-        users.append(row.get('fields','do not find fields').get("User",'do not find user'))
-        sentence.append(row.get('fields','do not find fields').get("Sentences", 'do not find user'))
-    return dict(zip(users,sentence))
+        users.append(row.get('fields', 'field not founded').get("User", 'user not founded'))
+        sentence.append(row.get('fields', 'field not founded').get("Sentences", 'user not founded'))
+    return dict(zip(users, sentence))
+
+
+
+
+def send_message_to_discord_channel(message):
+    return message
+
 
 intents = discord.Intents.default()
 intents.message_content = True
 
 client = discord.Client(intents=intents)
 
+
 @client.event
 async def on_ready():
     print(f"Bot has logged in as {client.user}")
+
 
 @client.event
 async def on_message(message):
@@ -54,6 +63,13 @@ async def on_message(message):
         users_sentences = json.dumps(get_users_list_with_sentences())
         print(type(users_sentences))
         await message.channel.send(users_sentences)
+    if send_message_to_discord_channel(message):
+        await message.channel.send(message)
 
-client.run(os.getenv("DISCORD_TOKEN"))
+
+@client.event
+async def some():
+    pass
+
+client.run(BOT_TOKEN)
 
