@@ -30,5 +30,5 @@ class BotEndpoint(Resource):
 api.add_resource(BotEndpoint, '/api/v1/send_json')
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0')
 
