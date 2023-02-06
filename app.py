@@ -1,55 +1,34 @@
-import threading
-from cProfile import run
-
-import discord
-from flask import Flask, request
+import os
+from flask import Flask, request, jsonify
 from flask_restful import Resource, Api
-from threading import Thread
-from bot import client as discord_client
 import requests
-
+from discord import SyncWebhook
 
 app = Flask(__name__)
 api = Api(app)
 
-
-
+DISCORD_WEBHOOK = os.getenv("DISCORD_WEBHOOK")
 
 
 class BotEndpoint(Resource):
     def get(self):
-        return {"message": "welcome"}
-    
-    def post (self):
-        message = request.get_json()
-        send_message(message)
-        return {"message": message}, 200
-    
-    def run():
+        message = request.args.get("message")
+        response = {"message": " " + (message if message else "default message")}
+        return jsonify(response)
+
+    def run(self):
         app.run(host='localhost', port=6000)
 
+    def post(self):
+        message = request.get_json()
+        print(f"I've got message: {message}")
+        webhook = SyncWebhook.from_url(DISCORD_WEBHOOK)
+        webhook.send(content=message)
+        return {"message": message}, 200
 
-api.add_resource(BotEndpoint, '/api/v1/send_message')
 
-
-
-
-def send_message(message):
-    discord_bot_url = f"https://discordapp.com/api/v6/bots/{BOT_TOKEN}/channels/{CHANEL_ID}/messages"
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": "Bot {bot_token}"
-    }
-    payload = {
-        "content": message
-    }
-    response = requests.post(discord_bot_url, headers=headers, json=payload)
-    if response.status_code == 200:
-        print("Message sent successfully")
-    else:
-        print("Failed to send message")
-
+api.add_resource(BotEndpoint, '/api/v1/send_json')
 
 if __name__ == "__main__":
+    app.run(debug=True)
 
-    app.run(debug=True, port=6000)

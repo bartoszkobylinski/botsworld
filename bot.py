@@ -2,29 +2,10 @@ import os
 from aiohttp import client 
 import discord
 from pyairtable import Table
-#  from dotenv import load_dotenv
 import json
 
-#  load_dotenv()
-'''
-class MyClient(discord.Client):
-    async def on_ready(self):
-        print(f'Logged on as {self.user}!')
 
-    async def on_message(message):
-        if message.author == client.user:
-            return
-        if message.content.startswith('$hello'):
-            await message.channel.send('Hello!')        
-intents = discord.Intents.default()
-intents.message_content = True
-server_id = os.getenv("SERVER_ID")
-client = MyClient(intents=intents)
-client.run(os.getenv("DISCORD_TOKEN"))
-
-'''
 # Airtable integration
-
 def get_users_list_with_sentences():
     users = []
     sentence = []
@@ -34,12 +15,6 @@ def get_users_list_with_sentences():
         users.append(row.get('fields', 'field not founded').get("User", 'user not founded'))
         sentence.append(row.get('fields', 'field not founded').get("Sentences", 'user not founded'))
     return dict(zip(users, sentence))
-
-
-
-
-def send_message_to_discord_channel(message):
-    return message
 
 
 intents = discord.Intents.default()
@@ -63,13 +38,7 @@ async def on_message(message):
         users_sentences = json.dumps(get_users_list_with_sentences())
         print(type(users_sentences))
         await message.channel.send(users_sentences)
-    if send_message_to_discord_channel(message):
-        await message.channel.send(message)
 
 
-@client.event
-async def some():
-    pass
-
-client.run(BOT_TOKEN)
+client.run(os.getenv("DISCORD_TOKEN"))
 
