@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, url_for, render_template
 from flask_restful import Resource, Api
 import requests
 from discord import SyncWebhook
@@ -9,6 +9,10 @@ api = Api(app)
 
 DISCORD_WEBHOOK = os.getenv("DISCORD_WEBHOOK")
 
+
+@app.route("/")
+def index():
+    return render_template("index.html")
 
 class BotEndpoint(Resource):
     def get(self):
