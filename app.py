@@ -14,6 +14,7 @@ DISCORD_WEBHOOK = os.getenv("DISCORD_WEBHOOK")
 def index():
     return render_template("index.html")
 
+
 class BotEndpoint(Resource):
     def get(self):
         message = request.args.get("message")
