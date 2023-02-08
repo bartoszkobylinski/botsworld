@@ -26,14 +26,18 @@ class BotEndpoint(Resource):
 
     def post(self):
         message = request.get_json()
-        print(f"I've got message: {message}")
-        webhook = SyncWebhook.from_url(DISCORD_WEBHOOK)
-        webhook.send(content=message)
-        return {"message": message}, 200
+        if not message:
+            return 404, {"message": "There is no request message"}
+        try:
+            webhook = SyncWebhook.from_url(DISCORD_WEBHOOK)
+            webhook.send(content=message)
+            return {"message": message}, 200
+        except Exception as error:
+            return {"message": error}, 404
 
 
 api.add_resource(BotEndpoint, '/api/v1/send_json')
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.run(host='127.0.0.1', port=7000)
 
