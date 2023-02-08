@@ -6,6 +6,7 @@ from discord import SyncWebhook
 
 app = Flask(__name__)
 api = Api(app)
+HOST = '0.0.0.0'
 
 DISCORD_WEBHOOK = os.getenv("DISCORD_WEBHOOK")
 
@@ -39,5 +40,5 @@ class BotEndpoint(Resource):
 api.add_resource(BotEndpoint, '/api/v1/send_json')
 
 if __name__ == "__main__":
-    app.run(host='127.0.0.1', port=7000)
+    app.run(host=HOST)
 
