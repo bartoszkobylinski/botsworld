@@ -1,10 +1,11 @@
 import os
 from flask import Flask, request, jsonify, url_for, render_template
 from flask_restful import Resource, Api
-import requests
 from discord import SyncWebhook
 import logging
-from datetime import datetime
+from dotenv import load_dotenv
+
+load_dotenv()
 
 level = logging.DEBUG
 level_name = logging.getLevelName(level)
