@@ -9,7 +9,7 @@ from datetime import datetime
 level = logging.DEBUG
 level_name = logging.getLevelName(level)
 logging.basicConfig(filename="logs.txt", filemode='w', level=logging.DEBUG,
-                    format='%(asctime)s - %(message)s')
+                    format='%(asctime)s - %(message)s',force=True)
 app = Flask(__name__)
 api = Api(app)
 HOST = '0.0.0.0'
