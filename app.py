@@ -2,7 +2,6 @@ import os
 from flask import Flask, request, jsonify, render_template
 from discord import SyncWebhook
 from dotenv import load_dotenv
-import json
 
 load_dotenv()
 app = Flask(__name__)
@@ -14,7 +13,7 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/api/v1/send_message")
+@app.route("/api/v1/send_message", methods=["GET", "POST"])
 def send_message():
     if request.method == "POST":
         try:
@@ -22,11 +21,11 @@ def send_message():
             discord_webhook = message['discord_webhook']
             webhook = SyncWebhook.from_url(discord_webhook)
             webhook.send(content=message["message"])
-            return jsonify({"message": "Message sent successfully!"}), 200
+            return jsonify({"message": "Message sent successfully!"})
         except KeyError:
-            return jsonify({"error": "Missing 'message' or 'discord_webhook' in JSON payload"}), 400
+            return jsonify({"error": "Missing 'message' or 'discord_webhook' in JSON payload"})
         except ValueError:
-            return jsonify({"error": "Invalid Discord webhook URL."}), 400
+            return jsonify({"error": "Invalid Discord webhook URL."})
     else:
         return render_template("send_message.html")
 
