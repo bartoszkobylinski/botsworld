@@ -2,9 +2,82 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     <title>Send message to discord bot</title>
 </head>
 <body>
+  <h1>/api/v1/send_message Endpoint Documentation</h1>
+  <p>
+    Here is the documentation for the endpoint /api/v1/send_message that you can use to send a message to a requested Discord channel:
+  </p>
 
-</body>
+  <h2>Endpoint URL</h2>
+  <p>
+    The endpoint URL is: <code>https://&lt;your_base_url&gt;/api/v1/send_message</code>
+  </p>
+
+  <h2>HTTP Method</h2>
+  <p>
+    The HTTP method used to send the request to the endpoint is <code>POST</code>.
+  </p>
+
+  <h2>Request Body</h2>
+  <p>
+    The request body should be in JSON format with the following structure:
+  </p>
+  <pre>
+  {
+      "message": &lt;string&gt;,
+      "discord_webhook": &lt;string&gt;
+  }
+  </pre>
+
+  <h2>Request Body Parameters</h2>
+  <ul>
+    <li><code>message</code>: A string representing the message content to be sent to the Discord channel.</li>
+    <li><code>discord_webhook</code>: A string representing the Discord webhook URL to which the message should be sent.</li>
+  </ul>
+
+  <h2>Example Request</h2>
+  <p>
+    Here is an example of a valid request to the endpoint:
+  </p>
+  <pre>
+  curl -X POST https://&lt;your_base_url&gt;/api/v1/send_message \
+  -H "Content-Type: application/json" \
+  -d '{
+      "message": "Hello from the API!",
+      "discord_webhook": "https://discordapp.com/api/webhooks/&lt;webhook_id&gt;/&lt;webhook_token&gt;"
+  }'
+  </pre>
+
+  <h2>Response</h2>
+  <p>
+    If the request is successful, the endpoint will return a JSON response with the following structure:
+  </p>
+  <pre>
+  {
+      "message": "Message sent successfully!"
+  }
+  </pre>
+
+  <h2>Error Responses</h2>
+  <p>
+    In case of any errors, the endpoint will return a JSON response with an error message, for example:
+  </p>
+  <pre>
+  {
+      "error": "Invalid discord webhook URL"
+  }
+  </pre>
+
+  <h2>Notes</h2>
+  <ul>
+    <li>Ensure that the Discord webhook URL provided is valid.</li>
+    <li>The message content should not exceed 2048 characters.</li>
+  </ul>
+  <p>
+    I hope this documentation helps you in integrating with the endpoint and sending messages to the Discord channel.
+  </p>
+</body
 </html>
