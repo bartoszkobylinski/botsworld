@@ -10,4 +10,16 @@ To use the send_message endpoint, you'll need to provide the message you want to
 
 Please note that this endpoint should not be overused, as it can impact the performance of the server and the Discord API.
 
+### Cloning the Project
+To clone the project, you can use the following command:
+
+git clone https://github.com/your-username/your-project.git
+
+### Installing Dependencies
+
+The project dependencies are listed in the `requirements.txt` file. To install them, you can use the following command:
+
+pip install -r requirements.txt
+
+This will install all the packages listed in the `requirements.txt` file, which are necessary for the project to run properly.
 Thank you!
