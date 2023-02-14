@@ -22,4 +22,5 @@ The project dependencies are listed in the `requirements.txt` file. To install t
 pip install -r requirements.txt
 
 This will install all the packages listed in the `requirements.txt` file, which are necessary for the project to run properly.
+
 Thank you!
